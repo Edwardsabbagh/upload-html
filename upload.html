@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Images</title>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .cloudinary-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Your Images</h1>
+    <p>Click the button below to upload your product images and get unique URLs.</p>
+    <button id="upload_widget" class="cloudinary-button">Upload Images</button>
+    <ul id="uploaded_urls"></ul>
+    <script>
+        var myWidget = cloudinary.createUploadWidget({
+            cloudName: 'dkb8sbrix', 
+            uploadPreset: 'seller_uploads' 
+        }, (error, result) => {
+            if (!error && result && result.event === "success") {
+                console.log('Uploaded image URL:', result.info.secure_url);
+                // Display the uploaded URL
+                const list = document.getElementById('uploaded_urls');
+                const listItem = document.createElement('li');
+                listItem.textContent = result.info.secure_url;
+                list.appendChild(listItem);
+            }
+        });
+
+        document.getElementById("upload_widget").addEventListener("click", function () {
+            myWidget.open();
+        }, false);
+    </script>
+</body>
+</html>
